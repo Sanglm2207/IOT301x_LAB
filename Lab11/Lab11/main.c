@@ -95,6 +95,85 @@ void search(int *x, int *y) {
 int add (int *pnum1, int *pnum2){
     return (*pnum1 + *pnum2);
 }
+//Ham hoan doi vi tri
+void hoanvi(int *a, int *b)
+{
+    int temp = *a;
+    *a = *b;
+    *b = temp;
+}
+
+//Ham tinh giai thua
+void findFact(int n,int *f)
+{
+    *f =1;
+    for(int i=1;i<=n;i++)
+        *f=*f*i;
+}
+
+// Ham JsonExtract để trích xuất thông tin của đối tượng JSON
+void jsonExtract(char json[], char fullname[], char sex[], char phone[], char email[]) {
+    //Mang info dung de luu thong tin nhu name, sex, phone and email
+    // info[0] se luu gia tri {"fullname" : "Lai Minh Sang"}
+    // info[1] se luu gia tri {"sex" : "male"}
+    // info[2] se luu gia tri {"phone" : "0762121242"}
+    // info[3] se luu gia tri {"email" : "sanglmFX18202@funix.edu.vn"}
+    char info[100][100] = {0};
+    int i;
+    
+    // Cat chuoi JSON dua vao dau ,
+    char* token = strtok(json, ",");
+    
+    i = 0;
+    while (token != NULL) {
+        strcpy(info[i], token);
+        ++i;
+        token = strtok(NULL, ",");
+    }
+    
+    //Trich xuat name
+    char* name_token = strtok(info[0], ":");
+    strcpy(fullname, strtok(NULL, ":"));
+    
+    //Trich xuat sex
+    token = strtok(NULL, ",");
+    char* sex_token = strtok(info[1], ":");
+    strcpy(sex, strtok(NULL, ":"));
+    
+    //Trich xuat phone
+    token = strtok(NULL, ",");
+    char* phone_token = strtok(info[2], ":");
+    strcpy(phone, strtok(NULL, ":"));
+    
+    //Trich xuat email
+    token = strtok(NULL, ",");
+    char* email_token = strtok(info[3], ":");
+    strcpy(email, strtok(NULL, ":"));
+    
+    if (email[strlen(email)-1] == '}') {
+        email[strlen(email)-1] = '\0';
+    }
+}
+
+char *multi_tok( char *input, char *delimiter) {
+    static char *string;
+    if (input != NULL) {
+        string = input;
+    }
+    if (string == NULL) {
+        return string;
+    }
+    char *end = strstr(string, delimiter);
+    if (end == NULL) {
+        char *temp = string;
+        string = NULL;
+        return temp;
+    }
+    char *temp = string;
+    *end = '\0';
+    string = end + strlen(delimiter);
+    return temp;
+}
 
 int main(int argc, const char * argv[]) {
     
@@ -183,28 +262,80 @@ int main(int argc, const char * argv[]) {
     //------------------------------------------------------------------------
     
     //------------------------------Bai 6-------------------------------------
-    int num1, num2, sum;
-    int *ptr1, *ptr2;
-//    int (*fp)(int, int);  /* Khai báo con trỏ hàm */
-    ptr1 = &num1;
-    ptr2 = &num2;
+    //    int num1 = 2, num2 = 3, sum;
+    //    int *ptr1, *ptr2;
+    //    ptr1 = &num1;       /* Gán địa chỉ hàm cho con trỏ */
+    //    ptr2 = &num2;
+    //
+    //    sum = add(ptr1, ptr2);    /* Gọi hàm bằng con trỏ hàm */
+    //    printf("sum = %d \n", sum);
     
-//    fp = add;             /* Gán địa chỉ hàm cho con trỏ */
-    sum = add(*ptr1, *ptr2);    /* Gọi hàm bằng con trỏ hàm */
-    printf("sum = %d \n", sum);
-    return 0;
     //------------------------------------------------------------------------
     
     //------------------------------Bai 7-------------------------------------
+    //    int a, b;
+    //    printf("Nhap 2 so a, b:\n");
+    //    scanf("%d%d", &a, &b);
+    //
+    //    printf("Ban da nhap:\na = %d \nb = %d\n", a, b);
+    //
+    //    hoanvi(&a, &b);
+    //
+    //    printf("Sau khi goi ham hoanvi:\na = %d\nb = %d \n", a, b);
     //------------------------------------------------------------------------
     
     //------------------------------Bai 8-------------------------------------
+    //    int fact;
+    //    int num1;
+    //    printf("\n\n Find the factorial of a given number :\n");
+    //    printf("------------------------------------------------------\n");
+    //    printf(" Input a number : ");
+    //    scanf("%d",&num1);
+    //
+    //    findFact(num1,&fact);
+    //    printf(" The Factorial of %d is : %d \n\n",num1,fact);
     //------------------------------------------------------------------------
     
     //------------------------------Bai 9-------------------------------------
+    //    char json[] = "{\"fullname\":\"LaiMinhSang\",\"sex\":\"male\",\"phone\":\"0762121242\",\"email\":\"sanglmFX18202@funix.edu.vn\"}";
+    //    char fullname[100], sex[100], phone[100], email[100];
+    //    jsonExtract(json, fullname, sex, phone, email);
+    //
+    //    printf("Thong tin cua doi tuong JSON:\n");
+    //    printf("Ho ten             : %s\n", fullname);
+    //    printf("Gioi tinh          : %s\n", sex);
+    //    printf("So dien thoai      : %s\n", phone);
+    //    printf("Email              : %s\n", email);
     //------------------------------------------------------------------------
     
     //------------------------------Bai 10------------------------------------
+    char json[] = "[{\"fullname\":\"LaiMinhSang\",\"sex\":\"male\",\"phone\":\"0762121242\",\"email\":\"sanglmFX18202@funix.edu.vn\"},{\"fullname\":\"NguyenThiBichNgoc\",\"sex\":\"female\",\"phone\":\"0342207037\",\"email\":\"ngocntb@fpt.edu.vn\"},{\"fullname\":\"PhamThiHong\",\"sex\":\"female\",\"phone\":\"0342207037\",\"email\":\"hongpt@fpt.edu.vn\"},{\"fullname\":\"NguyenThanhNguyen\",\"sex\":\"female\",\"phone\":\"0342207037\",\"email\":\"nguyennt@fpt.edu.vn\"},{\"fullname\":\"NguyenTienThang\",\"sex\":\"male\",\"phone\":\"0923182799\",\"email\":\"thangnt@fpt.edu.vn\"}]";
+    char fullname[100]={0}, sex[100]={0}, phone[100]={0}, email[100]={0};
+    char customer[500]={0};
+    char male_name[10][100]={0};
+    int quanlity_male = 0;
+    int quanlity_customer = 0;
+    int i = 0;
+    
+    char* token = multi_tok(json, "},{");
+    while (token != NULL) {
+        strcpy(customer, token);
+        jsonExtract(customer, fullname, sex, phone, email);
+        if (strcmp(sex, "\"male\"") == 0) {
+            strcpy(male_name[i], fullname);
+            quanlity_male++;
+            i++;
+        }
+        quanlity_customer++;
+        token = multi_tok(NULL, "},{");
+    }
+    printf("Co tong cong %d khach hang nam / Tong so so %d khach hang \n", quanlity_male, quanlity_customer);
+    if (quanlity_male > 0) {
+        printf("Ho ten cac khach hang nam:\n");
+        for (i = 0; i < quanlity_male; ++i) {
+            printf("%d. %s\n", i+1, male_name[i]);
+        }
+    }
     //------------------------------------------------------------------------
     return 0;
 }
