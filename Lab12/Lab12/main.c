@@ -98,7 +98,7 @@ void searchStudent(Student student1[], int n){
     if (!flag) {
         printf("\nKhong tim thay ten hoc sinh %s nay !\n", name);
         printf("--------------------------------------------------------\n");
-    }    
+    }
 }
 
 int main(int argc, const char * argv[]) {
