@@ -7,6 +7,8 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
+#include <stdbool.h>
 
 struct Birthday {
     int day;
@@ -81,7 +83,22 @@ void printStudent( Student student1[], int n)//ham xuat sinh vien
 }
 
 void searchStudent(Student student1[], int n){
-    printf("Loading... \n");
+    printf("Nhap ten hoc sinh can tim: ");
+    char name[100];
+    scanf("%s", name);
+    bool flag = false;
+    printf(" Name \t Age \t Address \t GPA \n");
+    for(int i = 0; i< n; i++){
+        if (strcmp(student1[i].name , name) == 0 ) {
+            printf("%s \t %d \t %s \t %0.2f \n", student1[i].name, student1[i].age, student1[i].address , student1[i].gpa);
+            flag = true;
+            break;
+        }
+    }
+    if (!flag) {
+        printf("\nKhong tim thay ten hoc sinh %s nay !\n", name);
+        printf("--------------------------------------------------------\n");
+    }    
 }
 
 int main(int argc, const char * argv[]) {
